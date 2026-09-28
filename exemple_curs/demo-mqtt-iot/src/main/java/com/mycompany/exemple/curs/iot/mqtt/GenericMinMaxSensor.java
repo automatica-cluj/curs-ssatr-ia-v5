@@ -8,6 +8,7 @@ package com.mycompany.exemple.curs.iot.mqtt;
  *
  * @author mihai
  */
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Random;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -39,7 +40,8 @@ public class GenericMinMaxSensor extends Observable implements Runnable {
         Random rand = new Random();
         while (!Thread.currentThread().isInterrupted()) {
             double generatedValue = minRange + (maxRange - minRange) * rand.nextDouble();
-            String formattedValue = String.format("%.2f %s", generatedValue, measurementUnit);
+            // Locale.US so the decimal separator is always "." (a Romanian locale would write "," and the controller could not parse it)
+            String formattedValue = String.format(Locale.US, "%.2f %s", generatedValue, measurementUnit);
 
             // Notify observers
             setChanged();
@@ -67,7 +69,7 @@ public class GenericMinMaxSensor extends Observable implements Runnable {
     }
     
     public static void main(String[] args) {
-        GenericMinMaxSensor vt = new GenericMinMaxSensor(-30,30, "C", "tcp://localhost:1883", "temperature");
+        GenericMinMaxSensor vt = new GenericMinMaxSensor(-30,30, "C", "tcp://control.aut.utcluj.ro:11188", "temperature");
         Thread t = new Thread(vt);
         t.start();
     }

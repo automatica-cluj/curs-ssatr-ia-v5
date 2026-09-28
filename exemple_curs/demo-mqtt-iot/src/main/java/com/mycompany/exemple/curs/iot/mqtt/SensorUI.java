@@ -18,7 +18,7 @@ public class SensorUI extends javax.swing.JFrame implements Observer{
      */
     public SensorUI() {
         initComponents();
-        GenericMinMaxSensor vt = new GenericMinMaxSensor(-30,30, "C", "tcp://localhost:1883", "temperature");
+        GenericMinMaxSensor vt = new GenericMinMaxSensor(-30,30, "C", "tcp://control.aut.utcluj.ro:11188", "temperature");
         Thread t = new Thread(vt);
         t.start();
         vt.addObserver(this);

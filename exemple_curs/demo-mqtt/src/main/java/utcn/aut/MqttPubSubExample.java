@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttPubSubExample {
     public static void main(String[] args) {
-        String broker = "tcp://broker.emqx.io:1883";
+        String broker = "tcp://control.aut.utcluj.ro:11188";
         //String broker = "tcp://mosquitto-broker:1883";
         String clientId = "JavaCli-"+System.currentTimeMillis();
         MemoryPersistence persistence = new MemoryPersistence();

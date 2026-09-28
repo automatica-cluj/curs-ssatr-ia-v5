@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MqttDemoMultipleTopics {
     public static void main(String[] args) {
-        String broker = "tcp://broker.emqx.io:1883";
+        String broker = "tcp://control.aut.utcluj.ro:11188";
         String clientId = "JavaSample";
         MemoryPersistence persistence = new MemoryPersistence();
 

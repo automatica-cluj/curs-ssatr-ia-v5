@@ -79,7 +79,7 @@ public class GenericController implements MqttCallback {
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
         list.add("temperature");
-        GenericController gc = new GenericController("tcp://localhost:1883",list);
+        GenericController gc = new GenericController("tcp://control.aut.utcluj.ro:11188",list);
     }
 
     

@@ -4,17 +4,55 @@
  */
 package com.mycompany.exemple.curs.iot.mqtt;
 
+import javax.swing.SwingUtilities;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
 /**
  *
  * @author mihai
  */
-public class ActuatorUI extends javax.swing.JFrame {
+public class ActuatorUI extends javax.swing.JFrame implements MqttCallback {
+
+    private MqttClient client;
+    private final String actuatorTopic = "actuator";
 
     /**
      * Creates new form ActuatorUI
      */
     public ActuatorUI() {
         initComponents();
+        try {
+            client = new MqttClient("tcp://control.aut.utcluj.ro:11188", MqttClient.generateClientId(), new MemoryPersistence());
+            client.setCallback(this);
+            client.connect();
+            client.subscribe(actuatorTopic);
+            System.out.println("Actuator subscribed to "+actuatorTopic+".");
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void connectionLost(Throwable cause) {
+        System.out.println("Connection lost.");
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+        String command = new String(message.getPayload());
+        System.out.println("Actuator received command: "+command);
+        // MQTT callbacks run on the Paho thread, Swing components must be updated on the UI thread
+        SwingUtilities.invokeLater(() -> jButton1.setText(command));
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {
+        // the actuator only receives messages
     }
 
     /**
