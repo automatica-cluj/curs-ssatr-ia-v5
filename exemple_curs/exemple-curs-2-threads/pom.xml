@@ -12,12 +12,4 @@
         <exec.mainClass>automatica.ssatr.exemple.curs.threads.ExempleCurs10Threads</exec.mainClass>
     </properties>
     
-    <dependencies>
-        <dependency>
-		<groupId>org.projectlombok</groupId>
-		<artifactId>lombok</artifactId>
-		<version>1.18.30</version>
-		<scope>provided</scope>
-        </dependency>
-    </dependencies>
 </project>

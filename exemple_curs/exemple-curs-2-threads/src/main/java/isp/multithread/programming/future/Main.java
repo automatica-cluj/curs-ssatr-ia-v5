@@ -12,7 +12,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Getter;
 
 /**
  *
@@ -86,13 +85,19 @@ public class Main {
 
 class BuyOrder1 implements Runnable{
 
-    @Getter 
     int quantity;
-    @Getter 
     int price;
 
     public BuyOrder1(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
     }
     
     public void run(){
@@ -109,13 +114,19 @@ class BuyOrder1 implements Runnable{
 
 class BuyOrder2 implements Callable<Integer>{
     
-    @Getter 
     int quantity;
-    @Getter 
     int price;
 
     public BuyOrder2(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
     }
     
     
@@ -132,13 +143,19 @@ class BuyOrder2 implements Callable<Integer>{
 
 class BuyOrder3 implements Supplier<Integer>{
     
-    @Getter 
     int quantity;
-    @Getter 
     int price;
 
     public BuyOrder3(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
     }
     
     @Override
