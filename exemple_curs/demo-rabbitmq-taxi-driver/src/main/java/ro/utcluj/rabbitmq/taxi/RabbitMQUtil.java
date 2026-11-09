@@ -13,6 +13,10 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Standalone helper which lists the broker queues through the RabbitMQ management HTTP API (not AMQP).
+ * It is not used by the taxi apps and still targets a local broker.
+ */
 public class RabbitMQUtil {
 
     private static final String RABBITMQ_API = "http://localhost:15672/api/queues";

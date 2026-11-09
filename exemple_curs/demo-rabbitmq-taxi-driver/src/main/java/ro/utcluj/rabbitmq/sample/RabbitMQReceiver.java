@@ -22,7 +22,10 @@ public class RabbitMQReceiver implements DeliverCallback{
     
     public void startReceiver() throws IOException, TimeoutException{
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Change if your RabbitMQ server is not on localhost
+        factory.setHost("control.aut.utcluj.ro");
+        factory.setPort(11156);
+        factory.setUsername("***");
+        factory.setPassword("***");
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
@@ -31,6 +34,7 @@ public class RabbitMQReceiver implements DeliverCallback{
 
         System.out.println("Start consuming messages...");
         channel.basicConsume(QUEUE_NAME, true, this, consumerTag -> { });
+        //basicConsume() does not block, so this line prints right away; messages are handled later on a RabbitMQ library thread
         System.out.println("DUPA CALL CONSUME");
     }
     

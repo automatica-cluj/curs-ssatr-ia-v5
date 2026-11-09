@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * Entry point of the taxi demo: creates the exchange, then opens two clients and two drivers in the same process.
  *
  * @author mihai
  */
@@ -26,17 +27,21 @@ public class Test {
      */
     public static void DeclareExchange() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Change if your RabbitMQ server is not on localhost
+        factory.setHost("control.aut.utcluj.ro");
+        factory.setPort(11156);
+        factory.setUsername("***");
+        factory.setPassword("***");
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
         
-        //Declare fanout exchange
-        channel.exchangeDeclare("booking-requests", BuiltinExchangeType.FANOUT, true);
+        //Declare fanout exchange. durable=true: the exchange survives a broker restart.
+        channel.exchangeDeclare(TaxiNames.EXCHANGE, BuiltinExchangeType.FANOUT, true);
         channel.close();
     }
     
     public static void main(String[] args) throws IOException, TimeoutException {
         
+        //must run first: drivers bind their queues to this exchange and clients publish on it
         DeclareExchange();
         
         TaxiClientApp c1 = new TaxiClientApp("Alin");

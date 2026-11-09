@@ -21,7 +21,6 @@ import java.util.concurrent.TimeoutException;
  */
 public class TaxiClient {
     private static final String FANOUT_EXCHANGE = "taxi_requests";
-    private static final String RABBITMQ_HOST = "localhost";
 
     private final String clientId;
     private final String confirmationQueue;
@@ -50,7 +49,10 @@ public class TaxiClient {
      */
     public void initialize() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(RABBITMQ_HOST);
+        factory.setHost("control.aut.utcluj.ro");
+        factory.setPort(11156);
+        factory.setUsername("***");
+        factory.setPassword("***");
 
         connection = factory.newConnection();
         channel = connection.createChannel();

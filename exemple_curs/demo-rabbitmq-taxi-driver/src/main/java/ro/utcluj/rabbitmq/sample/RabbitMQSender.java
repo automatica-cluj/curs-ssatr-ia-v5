@@ -17,10 +17,15 @@ public class RabbitMQSender {
     
     public static void sendMessage(String msg) throws Exception{
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Change this if your RabbitMQ is not running locally
+        factory.setHost("control.aut.utcluj.ro");
+        factory.setPort(11156);
+        factory.setUsername("***");
+        factory.setPassword("***");
         try (Connection connection = factory.newConnection();
             Channel channel = connection.createChannel()) {
+            //arguments: durable=false, exclusive=false, autoDelete=false. Must be the same as in RabbitMQReceiver.
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            //exchange "" is the default exchange: it delivers directly to the queue with the name given as routing key
             channel.basicPublish("", QUEUE_NAME, null, msg.getBytes());
             System.out.println(" [x] Sent '" + msg + "'");
         }
